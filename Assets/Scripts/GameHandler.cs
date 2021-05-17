@@ -10,6 +10,7 @@ using UnityEngine;
 
 public class GameHandler : MonoBehaviour
 {
+    public UIHandler uiHandler;
     public GameObject objCube;
     public bool bPause = false;
     public Transform[] transPoints;
@@ -32,10 +33,8 @@ public class GameHandler : MonoBehaviour
         if (Input.GetKeyDown("c")) SpawnCube();
         if (Input.GetKeyDown("p"))
         {
-            if (bPause) 
-                bPause = false;
-            else 
-                bPause = true;
+            if (bPause) uiHandler.OnClickResumeGame();
+            else uiHandler.OnClickPauseGame();
         } 
     }
 
@@ -47,6 +46,7 @@ public class GameHandler : MonoBehaviour
         CubeUnit cubeUnit = cube.GetComponent<CubeUnit>();
         cubeUnit.InitCube(this, transPoints, fCubeWaitTime, fCubeSpeed);
         listCubeUnit.Add(cubeUnit);
+        uiHandler.UpdateCountText(listCubeUnit.Count);
     }
 
     //Pause all cube movement
